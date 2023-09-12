@@ -3,18 +3,19 @@
 """
 from os import getenv
 from views.auth.auth import Auth
-from flask import Flask, jsonify, request, abort, redirect
+from flask import Flask, jsonify, request, abort, redirect, render_template
 
 
 app = Flask(__name__)
 AUTH = Auth()
 
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def index() -> str:
     """Returns a simple JSONIFY request
     """
-    return jsonify({"message": "Bienvenue"})
+    # return jsonify({"message": "Bienvenue"})
+    return render_template('index.html')
 
 
 @app.route('/users', methods=['POST'])
