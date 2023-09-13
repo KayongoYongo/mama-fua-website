@@ -55,6 +55,7 @@ class Auth:
         Return:
             None or user object
         """
+        
         try:
             # find the user with the given email
             user = self._db.find_user_by(email=email)

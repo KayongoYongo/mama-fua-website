@@ -38,6 +38,13 @@ def register() -> str:
     email = request.form.get('email')
     password = request.form.get('password')
 
+    
+    if not email:
+        return jsonify({"email": "The email cannot be empty"})
+        
+    if not password:
+        return jsonify({"password": "The password cannot be empty"})
+
     # register user if user does not exist
     try:
         user = AUTH.register_user(email, password)
