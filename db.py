@@ -46,3 +46,47 @@ class DB:
         self._session.add(user)
         self._session.commit()
         return user
+    
+    def find_user_by(self, **kwargs) -> User:
+        """
+        Find a user by given filter arguments
+
+        Args:
+            **kwargs: Arbitrary keyword arguments to filter the user.
+
+        Returns:
+            User: The found user object.
+
+        Raises:
+            NoResultFound: When no user is found
+            MultipleResultsFOund: When multiple users match the filter
+            InvalidRequestError: When Invalid query arguments are passed
+        """
+        if not kwargs:
+            raise InvalidRequestError
+
+        user = self._session.query(User).filter_by(**kwargs).first()
+
+        if user is None:
+            raise NoResultFound
+        return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        A method that takes as argument a required user_id integer
+        and arbitrary keyword arguments, and returns None
+
+        Args:
+            user_id (int): The user's ID
+
+        Return:
+            Returns None or arbitray key worded argments
+        """
+        user = self.find_user_by(id=user_id)
+        for key, value in kwargs.items():
+            if not hasattr(user, key):
+                raise ValueError
+            setattr(user, key, value)
+
+        self._session.commit()
+        return None
