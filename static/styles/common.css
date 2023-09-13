@@ -1,0 +1,19 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: skyblue;
+    background-image: url('../images/laundry.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.wrapper {
+    width : 420px;
+    background: white;
+    color: black;
+    border-radius: 10px;
+    padding: 30px 40px;
+}
