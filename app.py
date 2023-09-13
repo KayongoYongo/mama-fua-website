@@ -18,8 +18,15 @@ def index() -> str:
     return render_template('index.html')
 
 
+@app.route('/signup')
+def signup() -> str:
+    """Returns a simple JSONIFY request
+    """
+    return render_template('sign_up.html')
+
+
 @app.route('/users', methods=['POST'])
-def users() -> str:
+def register() -> str:
     """A function that impiments a POST method on the users table.
 
     Args:
@@ -34,9 +41,10 @@ def users() -> str:
     # register user if user does not exist
     try:
         user = AUTH.register_user(email, password)
-        return jsonify({"email": user.email, "message": "user created"})
     except Exception:
         return jsonify({"message": "email already registered"}), 400
+    
+    return jsonify({"email": f"{email}", "message": "user created"}), 200
 
 
 if __name__ == "__main__":

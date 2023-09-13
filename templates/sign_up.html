@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign Up</title>
 </head>
 <body>
+
+    <form action="{{ url_for('register') }}" method="post">
     <h1>Sign-up</h1>
+
+    <div>
+        <label for = "email" > Email Address </label>
+        <input type="email" name="email" id="email" placeholder="user@usermail.com">
+    </div>
+   
+    <div>
+        <label for = "Password" > Password </label>
+        <input type="password" name="password" id="password" placeholder="********">    
+    </div>
+
+    <button type ="submit" name ="register" id = "register" > Submit </button>
+
+    </form>
 </body>
 </html>
