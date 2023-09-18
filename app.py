@@ -17,13 +17,23 @@ def index() -> str:
     # return jsonify({"message": "Bienvenue"})
     return render_template('index.html')
 
-
 @app.route('/signup')
 def signup() -> str:
     """Returns a simple JSONIFY request
     """
     return render_template('sign_up.html')
 
+@app.route('/login')
+def login_route() -> str:
+    """Returns a simple JSONIFY request
+    """
+    return render_template('log_in.html')
+
+@app.route('/contact')
+def contact() -> str:
+    """Returns a simple JSONIFY request
+    """
+    return render_template('contact.html')
 
 @app.route('/users', methods=['POST'])
 def register() -> str:
@@ -38,7 +48,6 @@ def register() -> str:
     email = request.form.get('email')
     password = request.form.get('password')
 
-    
     if not email:
         return jsonify({"email": "The email cannot be empty"})
         
@@ -52,6 +61,48 @@ def register() -> str:
         return jsonify({"message": "email already registered"}), 400
     
     return jsonify({"email": f"{email}", "message": "user created"}), 200
+
+@app.route('/sessions', methods=['POST'])
+def login() -> str:
+    """A function theat impliments a log in functionality
+
+    Args:
+        None
+
+    Return:
+        A JSONIFY message and return response
+    """
+    # Get the form data
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    if not AUTH.valid_login(email, password):
+        abort(401)
+    else:
+        # if the form data is correct
+        session_id = AUTH.create_session(email)
+        response = jsonify({"email": email, "message": "logged in"})
+        response.set_cookie('session_id', session_id)
+
+    return response
+
+@app.route('/sessions', methods=['DELETE'])
+def logout() -> str:
+    """This function impliments a log out function by
+    deleting a session
+
+    Args:
+        None
+
+    Return:
+        Redirect request
+    """
+    session_id = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(session_id)
+    if not user:
+        abort(403)
+    AUTH.destroy_session(user.id)
+    return redirect('/')
 
 
 if __name__ == "__main__":
