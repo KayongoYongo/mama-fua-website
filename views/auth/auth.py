@@ -63,3 +63,78 @@ class Auth:
             return self._db.add_user(email, _hash_password(password))
         else:
             raise ValueError('User {} already exists'.format(email))
+        
+    def valid_login(self, email: str, password: str) -> bool:
+        """
+        This function checks if the log in is valid.
+
+        Args:
+            email: The users email
+            password: The users password
+
+        Return:
+            True or False
+        """
+        try:
+            # find the user with the given email
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return False
+
+        # check the validity of the password and returns true
+        return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
+
+    def create_session(self, email: str) -> str:
+        """
+        This function creates a session ID
+
+        Args:
+            email: The email that will be assigned to a session
+
+        Return:
+            A string which is the session ID.
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return None
+        else:
+            user.session_id = _generate_uuid()
+            return user.session_id
+
+    def get_user_from_session_id(self, session_id):
+        """
+        This function finds the user by session ID
+
+        Args:
+            session_id: The identification of the session
+
+        Return:
+            None or User
+        """
+        if session_id is None:
+            None
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+        except NoResultFound:
+            return None
+        else:
+            return user
+
+    def destroy_session(self, user_id):
+        """
+        This function destroys the current session of a user
+
+        Args:
+            user_id: The ID of the current user
+
+        Return:
+            None
+        """
+        try:
+            user = self._db.find_user_by(id=user_id)
+        except NoResultFound:
+            return None
+        else:
+            user.session_id = None
+            return None
