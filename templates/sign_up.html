@@ -4,25 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="static/styles/common.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Sign Up</title>
 </head>
 <body>
-
     <form action="{{ url_for('register') }}" method="post">
-    <h1>Sign-up</h1>
-    <div class="wrapper">
-        <div>
-            <label for = "email" > Email Address </label>
-            <input type="email" name="email" id="email" placeholder="user@usermail.com">
-        </div>
     
-        <div>
-            <label for = "Password" > Password </label>
-            <input type="password" name="password" id="password" placeholder="********">    
-        </div>
+    <div class="wrapper">
+        <h1>Sign up</h1>
+            <div class="input-box">
+                <input type="text" name="first_name" id="first_name" placeholder="First name">
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="text" name="last_name" id="last_name" placeholder="Last name">
+                <i class='bx bxs-user'></i>
+            </div>         
+            <div class="input-box">
+                <input type="email" name="email" id="email" placeholder="email">
+                <i class='bx bx-envelope' ></i>
+            </div>
+            <div class="input-box">
+                <input type="tel" name="telephone" id="telephone" placeholder="0712345678">
+                <i class='bx bx-phone' ></i>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" id="password" placeholder="password">
+                <i class='bx bxs-lock' ></i>     
+            </div>
+            <button type ="submit" name ="register" class="btn" id = "register" > Create an account </button>
 
-        <button type ="submit" name ="register" id = "register" > Submit </button>
-    </div>
+            <div class="redirect">
+            <p> Already registered?<a href="{{ url_for('login_route') }}">Log in</a></p>
+            </div>
+        </div>
     </form>
 </body>
 </html>

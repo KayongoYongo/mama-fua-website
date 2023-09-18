@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/styles/navbar.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/common.css">
     <title>Home page</title>
 </head>
+
+<header class="header">
+    <a href="#" class="logo">Logo</a>
+
+    <nav class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Careers</a>
+        <a href="#">Find location</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="#">About</a>
+    </nav>
+</header>
 <body>
-    <h1>MAMA FUA WEBSITE</h1>
     <a href="{{ url_for('signup') }}">Sign Up</a>
 </body>
 </html>
