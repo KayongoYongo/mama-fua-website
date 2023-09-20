@@ -13,8 +13,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: skyblue;
-    background-image: url('../images/laundry.jpg');
+    /**background-image: url('../images/laundry.jpg');**/
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
