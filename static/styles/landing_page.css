@@ -62,6 +62,10 @@ body {
     font-weight: 600;
 }
 
+.first-heading button:hover {
+    background-color: rgb(46,89,132);
+}
+
 .first-container img {
     width: 900px;
     height: 500px;
