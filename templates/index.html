@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="static/styles/navbar.css">
-    <link rel="stylesheet" type="text/css" href="static/styles/common.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/landing_page.css">
     <title>Home page</title>
 </head>
 
@@ -12,15 +12,46 @@
     <a href="#" class="logo">Logo</a>
 
     <nav class="navbar">
-        <a href="#">Home</a>
+        <a href="{{ url_for('index') }}">Home</a>
         <a href="#">Services</a>
         <a href="#">Careers</a>
-        <a href="#">Find location</a>
+        <a href="#">Book Online</a>
         <a href="{{ url_for('contact') }}">Contact</a>
         <a href="#">About</a>
     </nav>
 </header>
 <body>
-    <a href="{{ url_for('signup') }}">Sign Up</a>
+    <div class="top-container">
+        <div class="heading">
+            <h1>Welcome to Mama-Fua<br><span>Laundry Services</span></h1>
+            <br>
+            <p>The wash-wash business that only leaves your clothes clean</p>
+            <br>
+            <button onclick="window.location.href='{{ url_for('signup') }}'">Sign up for pickup and delivery</button>
+        </div>
+        <div>
+            <img src="static/images/laundry.jpg" alt="">
+        </div>
+    </div>
+    <div class="bottom-container">
+        <div>
+            <img src="static/images/laundry-services.jpg" alt=""> 
+        </div>
+        <div class="next-heading">
+            <h1>What we do :</h1>
+            <ul>
+            <li>Dry cleaning</li>
+            <li>Wet cleaning</li>
+            <li>Wash and Fold</li> 
+            <li>Ironing and pressing</li>
+            <li>Speciality cleaning eg Wedding Dresses and Suits</li>
+            <li>Household items eg rags, curtains</li>
+            </ul>
+        </div>
+    </div>
+    <div class="last-container">
+        <h1>How we work</h1>
+        <img src="static/images/how-we-work.jpeg" alt="">
+    </div>
 </body>
 </html>

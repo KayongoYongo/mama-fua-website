@@ -13,11 +13,11 @@
     <a href="#" class="logo">Logo</a>
 
     <nav class="navbar">
-        <a href="#">Home</a>
+        <a href="{{ url_for('index') }}">Home</a>
         <a href="#">Services</a>
-        <a href="#">My Account</a>
         <a href="#">Careers</a>
-        <a href="#">Find location</a>
+        <a href="#">Book Online</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
         <a href="#">About</a>
     </nav>
 </header>

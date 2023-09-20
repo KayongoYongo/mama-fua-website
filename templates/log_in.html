@@ -4,9 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="static/styles/common.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/navbar.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Log In</title>
 </head>
+
+<header class="header">
+    <a href="#" class="logo">Logo</a>
+
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Careers</a>
+        <a href="#">Book Online</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="#">About</a>
+    </nav>
+</header>
+
 <body>
 
     <form action="{{ url_for('login') }}" method="post">  
