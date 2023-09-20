@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="static/styles/navbar.css">
     <link rel="stylesheet" type="text/css" href="static/styles/landing_page.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/footer.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Home page</title>
 </head>
 
@@ -13,11 +15,10 @@
 
     <nav class="navbar">
         <a href="{{ url_for('index') }}">Home</a>
-        <a href="#">Services</a>
         <a href="{{ url_for('login_route') }}">Log In</a>
         <a href="#">Book Online</a>
-        <a href="{{ url_for('contact') }}">Contact</a>
         <a href="#">About</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
     </nav>
 </header>
 <body>
@@ -40,7 +41,7 @@
             <img src="static/images/laundry-services.jpg" alt=""> 
         </div>
         <div class="second-heading">
-            <h1>What we do :</h1>
+            <h1>Our Services :</h1>
             <ul>
                 <li>Dry cleaning</li>
                 <li>Wet cleaning</li>
@@ -117,4 +118,22 @@
         </div>
     </div>
 </body>
+
+<footer>
+    <div class="social-icons">
+        <i class='bx bxl-facebook-square' ></i>
+        <i class='bx bxl-twitter' ></i>
+        <i class='bx bxl-instagram' ></i>
+    </div>
+    <div class="footer-nav">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login_route') }}">Log In</a>
+        <a href="#">Book Online</a>
+        <a href="#">About</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+    </div>
+    <div class="copyright">
+        <p>Copyright &copy;2023<br>Designed by: Kayongo Samuel Yongo</p>
+    </div>
+</footer>
 </html>
