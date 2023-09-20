@@ -14,44 +14,107 @@
     <nav class="navbar">
         <a href="{{ url_for('index') }}">Home</a>
         <a href="#">Services</a>
-        <a href="#">Careers</a>
+        <a href="{{ url_for('login_route') }}">Log In</a>
         <a href="#">Book Online</a>
         <a href="{{ url_for('contact') }}">Contact</a>
         <a href="#">About</a>
     </nav>
 </header>
 <body>
-    <div class="top-container">
-        <div class="heading">
+    <div class="first-container">
+        <div class="first-heading">
             <h1>Welcome to Mama-Fua<br><span>Laundry Services</span></h1>
             <br>
             <p>The wash-wash business that only leaves your clothes clean</p>
             <br>
-            <button onclick="window.location.href='{{ url_for('signup') }}'">Sign up for pickup and delivery</button>
+            <p>Want to get started with pick up and delivery?</p>
+            <br>
+            <button onclick="window.location.href='{{ url_for('signup') }}'">Sign up</button>
         </div>
         <div>
             <img src="static/images/laundry.jpg" alt="">
         </div>
     </div>
-    <div class="bottom-container">
+    <div class="second-container">
         <div>
             <img src="static/images/laundry-services.jpg" alt=""> 
         </div>
-        <div class="next-heading">
+        <div class="second-heading">
             <h1>What we do :</h1>
             <ul>
-            <li>Dry cleaning</li>
-            <li>Wet cleaning</li>
-            <li>Wash and Fold</li> 
-            <li>Ironing and pressing</li>
-            <li>Speciality cleaning eg Wedding Dresses and Suits</li>
-            <li>Household items eg rags, curtains</li>
+                <li>Dry cleaning</li>
+                <li>Wet cleaning</li>
+                <li>Wash and Fold</li> 
+                <li>Ironing</li>
+                <li>Speciality cleaning eg Wedding Dresses and Suits</li>
+                <li>Household items eg Carpets, curtains</li>
             </ul>
         </div>
     </div>
-    <div class="last-container">
+    <div class="third-container">
         <h1>How we work</h1>
         <img src="static/images/how-we-work.jpeg" alt="">
+    </div>
+    <div class="last-heading">
+        <h1>Our Prices:</h1>
+    </div>
+    <div class="last-container">
+        <div class="mini-containers">
+            <div>
+                <img src="static/images/wet-cleaning.jpg" alt="">
+            </div>
+            <p>Wet cleaning:</p>
+            <ul>
+                <li>From 500 ksh per kg</li>
+            </ul>
+        </div>
+        <div class="mini-containers">
+            <div>
+                <img src="static/images/dry-cleaning.jpg" alt="">
+            </div>
+            <p>Dry cleaning:</p>
+            <ul>
+                <li>From 100 ksh per fabric</li>
+            </ul>
+        </div>
+        <div class="mini-containers">
+            <div>
+                <img src="static/images/wedding-attire.avif" alt="">
+            </div>
+            <p>Speciality cleaning:</p>
+            <ul>
+                <li>From 500 ksh per fabric</li>
+            </ul>
+        </div>
+        <div class="mini-containers">
+            <div>
+                <img src="static/images/carpets.jpg" alt="">
+            </div>
+            <p>Curtains & Carpets</p>
+            <ul>
+                <li>From 1000 ksh per fabric</li>
+            </ul>
+        </div>
+        <div class="mini-containers">
+            <div>
+                <img src="static/images/bed-linen.jpg" alt="">
+            </div>
+            <p>Bed Linen</p>
+            <ul>
+                <li>Bed sheets from 300 ksh per kg</li>
+                <li>Pillows from 200 ksh per kg</li>
+                <li>Duvets from 1000 ksh per kg</li>
+            </ul>
+        </div>
+        <div class="mini-containers">
+            <div>
+                <img src="static/images/ironing.jpg" alt="">
+            </div>
+            <p>Ironing</p>
+            <ul>
+                <li>From 10 ksh per fabric</li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>
