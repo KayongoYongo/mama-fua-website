@@ -4,12 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="static/styles/navbar.css">
-    <link rel="stylesheet" type="text/css" href="static/styles/common.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/location.css">
     <title>Our location</title>
 </head>
+
+<header class="header">
+    <a href="#" class="logo">Logo</a>
+
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login_route') }}">Log In</a>
+        <a href="#">Book Online</a>
+        <a href="#">About</a>
+        <a href="{{ url_for('location') }}">Our location</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+    </nav>
+</header>
+
 <body>
     <div class="location">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.4063667900723!2d36.880462404497216!3d-1.2864116547707702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f13efda283407%3A0xbed5f63d3d556f93!2sPetosam%20House%20-%20D%209!5e0!3m2!1sen!2ske!4v1695253042747!5m2!1sen!2ske" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.4063667900723!2d36.880462404497216!3d-1.2864116547707702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f13efda283407%3A0xbed5f63d3d556f93!2sPetosam%20House%20-%20D%209!5e0!3m2!1sen!2ske!4v1695253042747!5m2!1sen!2ske" width="900" height="675" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
+    <p>If you would like to drop your clothes, please use the map shown above to find us.</p>
+    <br>
+    <p>We are located in shop D19, Ground floor, Petosam House</p>
+    <br>
+    <p>You can contact us on: +254702 764 715</p>
 </body>
 </html>
