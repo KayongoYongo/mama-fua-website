@@ -29,6 +29,12 @@ def login_route() -> str:
     """
     return render_template('log_in.html')
 
+@app.route('/location')
+def location() -> str:
+    """Returns a simple JSONIFY request
+    """
+    return render_template('our_location.html')
+
 @app.route('/contact')
 def contact() -> str:
     """Returns a simple JSONIFY request
