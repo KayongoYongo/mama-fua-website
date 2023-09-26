@@ -3,7 +3,7 @@
 """
 from os import getenv
 from views.auth.auth import Auth
-from flask import Flask, jsonify, request, abort, redirect, render_template
+from flask import Flask, jsonify, request, abort, redirect, render_template, url_for
 
 
 app = Flask(__name__)
@@ -65,9 +65,12 @@ def register() -> str:
         user = AUTH.register_user(email, password)
     except Exception:
         return jsonify({"message": "email already registered"}), 400
+    return redirect(url_for('login_route'))
     
-    return jsonify({"email": f"{email}", "message": "user created"}), 200
-
+    """
+    return jsonify({"email": f"{email}", "message": "user created"})
+    """
+    
 @app.route('/sessions', methods=['POST'])
 def login() -> str:
     """A function theat impliments a log in functionality
@@ -103,13 +106,30 @@ def logout() -> str:
     Return:
         Redirect request
     """
-    session_id = request.cookies.get('session_id')
+    session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
-    if not user:
+    if user is None or session_id is None:
         abort(403)
     AUTH.destroy_session(user.id)
-    return redirect('/')
+    return redirect("/")
 
+@app.route('/profile', methods=["GET"], strict_slashes=False)
+def profile() -> str:
+    """This function impliments a function for obtaining
+    he users details from the session and displaying it
+    on the form
+
+    Args:
+        None
+
+    Return:
+        Redirect request
+    """
+    session_id = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(session_id)
+
+    if user:
+        return render_template('user_dashboard.html', user=user)
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
