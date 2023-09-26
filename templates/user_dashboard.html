@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/styles/navbar.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/common.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/footer.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>User Dashboard</title>
+</head>
+
+<header class="header">
+    <a href="#" class="logo">Logo</a>
+
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="#">Book Online</a>
+        <a href="#">About</a>
+        <a href="{{ url_for('logout') }}">Log out</a>
+        <a href="{{ url_for('location') }}">Our location</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+    </nav>
+</header>
+
+<body>
+    <h1>User Profile</h1>
+    <p>Email: {{ user.email }}</p>
+</body>
+
+</html>
