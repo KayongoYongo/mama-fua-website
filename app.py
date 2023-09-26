@@ -67,10 +67,6 @@ def register() -> str:
         return jsonify({"message": "email already registered"}), 400
     return redirect(url_for('login_route'))
     
-    """
-    return jsonify({"email": f"{email}", "message": "user created"})
-    """
-    
 @app.route('/sessions', methods=['POST'])
 def login() -> str:
     """A function theat impliments a log in functionality
@@ -88,12 +84,19 @@ def login() -> str:
     if not AUTH.valid_login(email, password):
         abort(401)
     else:
-        # if the form data is correct
+        # create a neww session
         session_id = AUTH.create_session(email)
         response = jsonify({"email": email, "message": "logged in"})
         response.set_cookie('session_id', session_id)
-
-    return response
+        print(session_id)
+    
+    # render user details onto html
+    user = AUTH.get_user_from_session_id(session_id)
+    if not  user:
+        abort(403)
+    print(user.email)
+    
+    return render_template('user_dashboard.html', user=user)
 
 @app.route('/sessions', methods=['DELETE'])
 def logout() -> str:
@@ -112,24 +115,6 @@ def logout() -> str:
         abort(403)
     AUTH.destroy_session(user.id)
     return redirect("/")
-
-@app.route('/profile', methods=["GET"], strict_slashes=False)
-def profile() -> str:
-    """This function impliments a function for obtaining
-    he users details from the session and displaying it
-    on the form
-
-    Args:
-        None
-
-    Return:
-        Redirect request
-    """
-    session_id = request.cookies.get('session_id')
-    user = AUTH.get_user_from_session_id(session_id)
-
-    if user:
-        return render_template('user_dashboard.html', user=user)
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
