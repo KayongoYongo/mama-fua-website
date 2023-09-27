@@ -133,9 +133,8 @@ class Auth:
             None
         """
         try:
-            user = self._db.find_user_by(id=user_id)
-        except NoResultFound:
+            self._db.update_user(user_id, session_id=None)
+        except ValueError:
             return None
-        else:
-            user.session_id = None
-            return None
+        
+        return None
