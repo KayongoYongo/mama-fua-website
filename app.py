@@ -3,7 +3,8 @@
 """
 from os import getenv
 from views.auth.auth import Auth
-from flask import Flask, jsonify, request, abort, redirect, render_template, url_for
+from flask import Flask, jsonify, request, abort, redirect, render_template, url_for, make_response
+from sqlalchemy.orm.exc import NoResultFound
 
 
 app = Flask(__name__)
@@ -86,19 +87,15 @@ def login() -> str:
     else:
         # create a neww session
         session_id = AUTH.create_session(email)
-        response = jsonify({"email": email, "message": "logged in"})
-        response.set_cookie('session_id', session_id)
-        print(session_id)
-    
-    # render user details onto html
-    user = AUTH.get_user_from_session_id(session_id)
-    if not  user:
-        abort(403)
-    print(user.email)
-    
-    return render_template('user_dashboard.html', user=user)
 
-@app.route('/sessions', methods=['DELETE'])
+        user = AUTH.get_user_from_session_id(session_id)
+        response = make_response(render_template('user_dashboard.html', user=user))
+        response.set_cookie('session_id', session_id)
+        # print(session_id)
+    
+    return response
+
+@app.route('/logout', methods=['POST'])
 def logout() -> str:
     """This function impliments a log out function by
     deleting a session
@@ -113,8 +110,16 @@ def logout() -> str:
     user = AUTH.get_user_from_session_id(session_id)
     if user is None or session_id is None:
         abort(403)
-    AUTH.destroy_session(user.id)
-    return redirect("/")
+
+    print(session_id)
+    print(user.id)
+    
+    try:
+        AUTH.destroy_session(user.id)
+    except NoResultFound:
+        abort(403)
+    else:
+        return redirect(url_for('index'))
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
