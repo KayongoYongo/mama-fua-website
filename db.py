@@ -2,6 +2,7 @@
 """DB module
 """
 from models.user import User, Base
+from models.bookings import Bookings, Base
 from sqlalchemy import create_engine
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm import sessionmaker
@@ -44,7 +45,7 @@ class DB:
             User: The newly created user object.
         """
 
-        user = User(email=email, hashed_password=hashed_password)
+        user = User(email=email, hashed_password=hashed_password, )
         self._session.add(user)
         self._session.commit()
         return user
@@ -92,3 +93,19 @@ class DB:
 
         self._session.commit()
         return None
+    
+    def add_booking(self, email: str) -> Bookings:
+        """
+        Add a new user to the database.
+
+        Args:
+            email: The email of the user
+            hashed_password: Hashed password of the user
+
+        Returns:
+            User: The newly created user object.
+        """
+        booking = Bookings(email=email)
+        self._session.add(booking)
+        self._session.commit()
+        return booking

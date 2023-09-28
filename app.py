@@ -120,6 +120,23 @@ def logout() -> str:
         abort(403)
     else:
         return redirect(url_for('index'))
+    
+@app.route('/bookings', methods=['POST'])
+def create_booking() -> str:
+    """A function that impiments a POST method on the users table.
+
+    Args:
+        None
+
+    Return:
+        Return: A jsonify message
+    """
+    session_id = request.cookies.get("session_id", None)
+    user = AUTH.get_user_from_session_id(session_id)
+
+    AUTH.create_booking(user.email)
+    print(user.email)
+    return render_template('user_dashboard.html', user=user)
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")

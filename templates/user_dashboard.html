@@ -25,10 +25,17 @@
 <body>
     <h1>User Profile</h1>
     <p>Email: {{ user.email }}</p>
+    <p>Phone Number: {{ user.phone_number }} </p>
+    <p>User ID: {{ user.id }} </p>
 
     <form method="POST" action="{{ url_for('logout') }}">
         <button type ="submit" class="btn" name ="log_out" id = "log_out" > Log Out </button>
     </form>
+
+    <form method="POST" action="{{ url_for('create_booking') }}">
+        <button type ="submit" class="btn" name ="create_booking" id = "create_booking" > Create Booking </button>
+    </form>
+
 </body>
 
 </html>

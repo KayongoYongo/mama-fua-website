@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A function that encrypts a password
+"""A function that auhenticates the data
 """
 from models.user import User
 from typing import Union
@@ -138,3 +138,16 @@ class Auth:
             return None
         
         return None
+    
+    def create_booking(self, email: str)-> Union[None, User]:
+        """
+        This function creates a session ID
+
+        Args:
+            email: The email that will be assigned to a session
+
+        Return:
+            A string which is the session ID.
+        """
+    
+        return self._db.add_booking(email)
