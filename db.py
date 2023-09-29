@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """DB module
 """
-from models.user import User, Base
-from models.bookings import Bookings, Base
+# from models.user import User, Base
+# from models.bookings import Bookings, Base
+from models.all_models import User, Bookings, Base
 from sqlalchemy import create_engine
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm import sessionmaker
@@ -17,10 +18,14 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=False)
+        # mysql_url = 'mysql+mysqldb://end_user:password@localhost:3306/mama_fua'
+        mysql_url ="sqlite:///a.db"
+        self._engine = create_engine(mysql_url, echo=False)
         
+        """
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
+        """
         
         self.__session = None
 
@@ -33,7 +38,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> User:
+    def add_user(self, email: str, hashed_password: str, first_name:str, second_name: str, phone_number: str)  -> User:
         """
         Add a new user to the database.
 
@@ -45,7 +50,7 @@ class DB:
             User: The newly created user object.
         """
 
-        user = User(email=email, hashed_password=hashed_password, )
+        user = User(email=email, hashed_password=hashed_password, first_name=first_name, second_name=second_name, phone_number=phone_number)
         self._session.add(user)
         self._session.commit()
         return user
