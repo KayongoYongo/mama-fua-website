@@ -2,6 +2,7 @@
 """A function that auhenticates the data
 """
 from models.user import User
+from models.bookings import Bookings
 from typing import Union
 from sqlalchemy.orm.exc import NoResultFound
 import bcrypt
@@ -44,7 +45,7 @@ class Auth:
         """
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> Union[None, User]:
+    def register_user(self, email: str, password: str, first_name:str, second_name: str, phone_number: str) -> Union[None, User]:
         """
         A method for registering users.
 
@@ -60,7 +61,7 @@ class Auth:
             # find the user with the given email
             user = self._db.find_user_by(email=email)
         except NoResultFound:
-            return self._db.add_user(email, _hash_password(password))
+            return self._db.add_user(email, _hash_password(password), first_name, second_name, phone_number)
         else:
             raise ValueError('User {} already exists'.format(email))
         
@@ -138,8 +139,8 @@ class Auth:
             return None
         
         return None
-    
-    def create_booking(self, email: str)-> Union[None, User]:
+
+    def create_booking(self, email: str)-> Union[None, Bookings]:
         """
         This function creates a session ID
 
