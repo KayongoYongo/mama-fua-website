@@ -8,6 +8,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 
 app = Flask(__name__)
+
 AUTH = Auth()
 
 
@@ -54,6 +55,9 @@ def register() -> str:
     """
     email = request.form.get('email')
     password = request.form.get('password')
+    first_name = request.form.get('first_name')
+    second_name = request.form.get('second_name')
+    phone_number = request.form.get('phone_number')
 
     if not email:
         return jsonify({"email": "The email cannot be empty"})
@@ -63,7 +67,7 @@ def register() -> str:
 
     # register user if user does not exist
     try:
-        user = AUTH.register_user(email, password)
+        user = AUTH.register_user(email, password, first_name, second_name, phone_number)
     except Exception:
         return jsonify({"message": "email already registered"}), 400
     return redirect(url_for('login_route'))
