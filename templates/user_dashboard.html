@@ -24,14 +24,19 @@
 
 <body>
     <h1>User Profile</h1>
+    <h2>Welcome {{user.first_name}}</h2>
+    <h1>Details:</h1>
+    <br>
     <p>Email: {{ user.email }}</p>
+    <br>
     <p>Phone Number: {{ user.phone_number }} </p>
+    <br>
     <p>User ID: {{ user.id }} </p>
-
+    <br>
     <form method="POST" action="{{ url_for('logout') }}">
         <button type ="submit" class="btn" name ="log_out" id = "log_out" > Log Out </button>
     </form>
-
+    <br>
     <form method="POST" action="{{ url_for('create_booking') }}">
         <button type ="submit" class="btn" name ="create_booking" id = "create_booking" > Create Booking </button>
     </form>
