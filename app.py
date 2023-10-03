@@ -16,7 +16,6 @@ AUTH = Auth()
 def index() -> str:
     """Returns a simple JSONIFY request
     """
-    # return jsonify({"message": "Bienvenue"})
     return render_template('index.html')
 
 @app.route('/signup')
@@ -138,9 +137,39 @@ def create_booking() -> str:
     session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
 
+    bookings = AUTH.find_all_bookings(user.email)
+
+    """
+    count = 0
+    for booking in bookings:
+        if booking.status == "Pending":
+            count += 1      
+    print(count)
+
+    if count > 0:
+        return jsonify({"Booking": "Cannot create a new booking. Previus booking is still pending and you'll need to wwait for email confirmation"})
+    """
+    
     AUTH.create_booking(user.email)
-    print(user.email)
     return render_template('user_dashboard.html', user=user)
+
+@app.route('/users_bookings', methods=['GET'])
+def view_booking() -> str:
+    """A function that impiments a POST method on the users table.
+
+    Args:
+        None
+
+    Return:
+        Return: A jsonify message
+    """
+    session_id = request.cookies.get("session_id", None)
+    user = AUTH.get_user_from_session_id(session_id)
+    
+    bookings = AUTH.find_all_bookings(user.email)
+    print(bookings)
+    
+    return render_template('bookings.html', user=user, bookings=bookings)
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
