@@ -101,16 +101,83 @@ class DB:
     
     def add_booking(self, email: str) -> Bookings:
         """
-        Add a new user to the database.
+        Add a new booking to the database.
 
         Args:
             email: The email of the user
-            hashed_password: Hashed password of the user
 
         Returns:
-            User: The newly created user object.
+            User: The newly created booking object.
         """
         booking = Bookings(email=email)
         self._session.add(booking)
         self._session.commit()
         return booking
+    
+    def find_booking_by(self, **kwargs) -> Bookings:
+        """
+        Find a booking by given filter arguments
+
+        Args:
+            **kwargs: Arbitrary keyword arguments to filter the user.
+
+        Returns:
+            User: The found user object.
+
+        Raises:
+            NoResultFound: When no user is found
+            MultipleResultsFOund: When multiple users match the filter
+            InvalidRequestError: When Invalid query arguments are passed
+        """
+        if not kwargs:
+            raise InvalidRequestError
+
+        booking = self._session.query(Bookings).filter_by(**kwargs).first()
+
+        if booking is None:
+            raise NoResultFound
+        return booking
+    
+    def find_all_bookings_by(self, **kwargs) -> Bookings:
+        """
+        Find a booking by given filter arguments
+
+        Args:
+            **kwargs: Arbitrary keyword arguments to filter the user.
+
+        Returns:
+            User: The found user object.
+
+        Raises:
+            NoResultFound: When no user is found
+            MultipleResultsFOund: When multiple users match the filter
+            InvalidRequestError: When Invalid query arguments are passed
+        """
+        if not kwargs:
+            raise InvalidRequestError
+
+        bookings = self._session.query(Bookings).filter_by(**kwargs).all()
+
+        if bookings is None:
+            raise NoResultFound
+        return bookings
+    
+    def update_booking(self, email: str, **kwargs) -> None:
+        """
+        A method that takes as argument a required user_id integer
+        and arbitrary keyword arguments, and returns None
+
+        Args:
+            user_id (int): The user's ID
+
+        Return:
+            Returns None or arbitray key worded argments
+        """
+        booking = self.find_booking_by(email=email)
+        for key, value in kwargs.items():
+            if not hasattr(booking, key):
+                raise ValueError
+            setattr(booking, key, value)
+
+        self._session.commit()
+        return None    
