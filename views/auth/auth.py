@@ -142,7 +142,7 @@ class Auth:
 
     def create_booking(self, email: str)-> Union[None, Bookings]:
         """
-        This function creates a session ID
+        This function creates a booking instance
 
         Args:
             email: The email that will be assigned to a session
@@ -150,5 +150,40 @@ class Auth:
         Return:
             A string which is the session ID.
         """
-    
+        
+        bookings = self._db.find_all_bookings_by(email=email)
+        count = 0
+        for booking in bookings:
+            if booking.status == "Pending":
+                count += 1 
+       
+        if count > 0:
+            raise ValueError("The previous booking is still pending. Please wait for a comfirmation message.")
+        
         return self._db.add_booking(email)
+        
+    def find_booking(self, email: str)-> Union[None, Bookings]:
+        """
+        This function finds the users booking
+
+        Args:
+            email: The email that will be assigned to a session
+
+        Return:
+            A string which is the session ID.
+        """ 
+        booking = self._db.find_booking_by(email=email)
+        return booking
+    
+    def find_all_bookings(self, email: str)-> Union[None, Bookings]:
+        """
+        This function finds the users booking
+
+        Args:
+            email: The email that will be assigned to a session
+
+        Return:
+            A string which is the session ID.
+        """ 
+        booking = self._db.find_all_bookings_by(email=email)
+        return booking
