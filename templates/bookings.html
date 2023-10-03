@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="static/styles/user_dashboard.css">
     <link rel="stylesheet" type="text/css" href="static/styles/footer.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>User Dashboard</title>
+    <title>Booking Dashboard</title>
 </head>
 
 <header class="header">
@@ -32,19 +32,26 @@
     <p>Phone Number: {{ user.phone_number }} </p>
     <br>
     <p>User ID: {{ user.id }} </p>
-    <br>
-    <form method="POST" action="{{ url_for('logout') }}">
-        <button type ="submit" class="btn" name ="log_out" id = "log_out" > Log Out </button>
-    </form>
-    <br>
-    <form method="POST" action="{{ url_for('create_booking') }}">
-        <button type ="submit" class="btn" name ="create_booking" id = "create_booking" > Create Booking </button>
-    </form>
-    <br>
-    <form method="GET" action="{{ url_for('view_booking')}}">
-        <button type ="submit" class="btn" name ="view_booking" id = "view_booking" > View Booking History </button>
-    </form>
 
+    <table>
+        <tr>
+            <th>Booking ID</th>
+            <th>Email</th>
+            <th>Created at</th>
+            <th>Expected date</th>
+            <th>Status</th>
+        </tr>
+        
+        {% for booking in bookings %}
+        <tr>        
+            <td>{{ booking.id }}</td>
+            <td>{{ booking.email }}</td>
+            <td>{{ booking.created_at }}</td>
+            <td>{{ booking.expected_date }}</td>
+            <td>{{ booking.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 
 </html>
