@@ -129,7 +129,7 @@ def logout() -> str:
     else:
         return redirect(url_for('index'))
     
-@app.route('/bookings', methods=['POST'])
+@app.route('/booking_dashboard', methods=['POST'])
 def create_booking() -> str:
     """A function that impiments a POST method on the users table.
 
@@ -144,21 +144,10 @@ def create_booking() -> str:
 
     bookings = AUTH.find_all_bookings(user.email)
 
-    """
-    count = 0
-    for booking in bookings:
-        if booking.status == "Pending":
-            count += 1      
-    print(count)
-
-    if count > 0:
-        return jsonify({"Booking": "Cannot create a new booking. Previus booking is still pending and you'll need to wwait for email confirmation"})
-    """
-    
     AUTH.create_booking(user.email)
-    return render_template('user_dashboard.html', user=user)
+    return render_template('booking_dahsboard.html', user=user, bookings=bookings)
 
-@app.route('/users_bookings', methods=['GET'])
+@app.route('/view_booking', methods=['GET'])
 def view_booking() -> str:
     """A function that impiments a POST method on the users table.
 
@@ -174,7 +163,7 @@ def view_booking() -> str:
     bookings = AUTH.find_all_bookings(user.email)
     print(bookings)
     
-    return render_template('bookings.html', user=user, bookings=bookings)
+    return render_template('booking_dahsboard.html', user=user, bookings=bookings)
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
