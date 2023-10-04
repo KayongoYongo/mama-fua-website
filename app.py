@@ -87,14 +87,19 @@ def login() -> str:
 
     if not AUTH.valid_login(email, password):
         abort(401)
-    else:
-        # create a neww session
-        session_id = AUTH.create_session(email)
 
-        user = AUTH.get_user_from_session_id(session_id)
-        response = make_response(render_template('user_dashboard.html', user=user))
+    # create a new session
+    session_id = AUTH.create_session(email)
+
+    user = AUTH.get_user_from_session_id(session_id)
+
+    if user.first_name == "ADMIN":
+        response = make_response(render_template('admin_dashboard.html', user=user))
         response.set_cookie('session_id', session_id)
-        # print(session_id)
+        return response
+
+    response = make_response(render_template('user_dashboard.html', user=user))
+    response.set_cookie('session_id', session_id)
     
     return response
 
