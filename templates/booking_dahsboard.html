@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/styles/navbar.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/user_dashboard.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/footer.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Booking Dashboard</title>
+</head>
+
+<header class="header">
+    <a href="#" class="logo">Logo</a>
+
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="#">Book Online</a>
+        <a href="#">About</a>
+        <a href="{{ url_for('location') }}">Our location</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+    </nav>
+</header>
+
+<body>
+    <div class="form-booking">
+        <h1>Booking Dashboard</h1>
+        <h2>Welcome {{user.first_name}}</h2>
+        <h1>Details:</h1>
+        <br>        
+        <form method="POST" action="{{ url_for('create_booking') }}">
+
+            <label for="datePicker">Select a Date:</label>
+            <div class="input-area">
+                <input type="date" id="datePicker" name="datePicker" oninput="disableWeekends(this)">
+                <script src="static/javascript/disableWeekends.js"></script>
+                <script src="static/javascript/checkDate.js"></script>
+                <script src="static/javascript/minimumDate.js"></script>
+                <script src="static/javascript/maxDate.js"></script>
+            </div>
+            <br>
+            <label for="timeSlots">Select a Time Slot for pick up:</label>
+            <select id="timeSlots" name="pickupTime">
+                <option value="9:00 AM">9:00 AM</option>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="11:00 AM">11:00 AM</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="1:00 PM">1:00 PM</option>
+                <option value="2:00 PM">2:00 PM</option>
+                <option value="3:00 PM">3:00 PM</option>
+            </select>
+            <br>
+            <br>
+            <label for="timeSlots">Select a Time Slot for Delivery:</label>
+            <select id="timeSlots" name="deliveryTime">
+                <option value="9:00 AM">9:00 AM</option>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="11:00 AM">11:00 AM</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="1:00 PM">1:00 PM</option>
+                <option value="2:00 PM">2:00 PM</option>
+                <option value="3:00 PM">3:00 PM</option>
+            </select>
+            <br>
+            <br>
+            <label for="timeSlots">Location:</label>
+            <div class="input-box">
+                <input type="text" name="location" id="location" placeholder="location">
+            </div>
+            <br>
+            <button type ="submit" class="btn" name ="create_booking" id = "create_booking" > Create Booking </button>
+        </form>
+    </div>
+    <h1>Booking History:</h1>
+    <table>
+        <tr>
+            <th>Booking ID</th>
+            <th>Email</th>
+            <th>Created at</th>
+            <th>Expected date</th>
+            <th>Status</th>
+        </tr>
+        
+        {% for booking in bookings %}
+        <tr>        
+            <td>{{ booking.id }}</td>
+            <td>{{ booking.email }}</td>
+            <td>{{ booking.created_at }}</td>
+            <td>{{ booking.expected_date }}</td>
+            <td>{{ booking.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>
