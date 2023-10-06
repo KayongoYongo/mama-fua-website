@@ -139,12 +139,21 @@ def create_booking() -> str:
     Return:
         Return: A jsonify message
     """
+
+    pickup_date = request.form.get('datePicker')
+    pickup_time = request.form.get('pickupTime')
+    delivery_time = request.form.get('deliveryTime ')
+    location = request.form.get('location')
+
+    print(pickup_date)
+    print(location)
+
     session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
 
     bookings = AUTH.find_all_bookings(user.email)
 
-    AUTH.create_booking(user.email)
+    AUTH.create_booking(user.email, pickup_date, pickup_time, delivery_time, location)
     return render_template('booking_dahsboard.html', user=user, bookings=bookings)
 
 @app.route('/view_booking', methods=['GET'])
@@ -164,6 +173,54 @@ def view_booking() -> str:
     print(bookings)
     
     return render_template('booking_dahsboard.html', user=user, bookings=bookings)
+
+@app.route('/view_user_bookings', methods=['POST'])
+def view_user_bookings() -> str:
+    """A function that impiments a POST method on the users table.
+
+    Args:
+        None
+
+    Return:
+        Return: A jsonify message
+    """
+    
+    status = request.form.get('status')
+    print(status)
+
+    session_id = request.cookies.get("session_id", None)
+    user = AUTH.get_user_from_session_id(session_id)
+    
+    bookings = AUTH.find_all_users_bookings(status)
+    print(bookings)
+    
+    return render_template('admin_booking_dahsboard.html', user=user, bookings=bookings)
+
+@app.route('/update_bookings', methods=['POST'])
+def update_bookings() -> str:
+    """A function that impiments a POST method on the users table.
+
+    Args:
+        None
+
+    Return:
+        Return: A jsonify message
+    """
+    id = request.form.get('bookingID')
+    expected_date = request.form.get('datePicker')
+    status = request.form.get('status')
+
+    print(expected_date)
+    print(status)
+
+    AUTH.update_bookings(id, status, expected_date)
+
+    # Get the details for rendering the page
+    session_id = request.cookies.get("session_id", None)
+    user = AUTH.get_user_from_session_id(session_id)
+    bookings = AUTH.find_all_users_bookings(status)
+    
+    return render_template('admin_booking_dahsboard.html', user=user, bookings=bookings)
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
