@@ -24,9 +24,9 @@ class DB:
         
         """
         Base.metadata.drop_all(self._engine)
-        Base.metadata.create_all(self._engine)
+        Base.metadata.create_all(self._engine)       
         """
-        
+
         self.__session = None
 
     @property
@@ -98,8 +98,8 @@ class DB:
 
         self._session.commit()
         return None
-    
-    def add_booking(self, email: str) -> Bookings:
+
+    def add_booking(self, email: str, pickup_date: str, pickup_time: str, delivery_time: str, location: str) -> Bookings:
         """
         Add a new booking to the database.
 
@@ -109,7 +109,9 @@ class DB:
         Returns:
             User: The newly created booking object.
         """
-        booking = Bookings(email=email)
+        pickup_date, pickup_time, delivery_time, location
+
+        booking = Bookings(email=email, pickup_date=pickup_date, pickup_time=pickup_time, delivery_time=delivery_time, location=location)
         self._session.add(booking)
         self._session.commit()
         return booking
@@ -162,18 +164,18 @@ class DB:
             raise NoResultFound
         return bookings
     
-    def update_booking(self, email: str, **kwargs) -> None:
+    def update_booking(self, booking_id: int, **kwargs) -> None:
         """
         A method that takes as argument a required user_id integer
         and arbitrary keyword arguments, and returns None
 
         Args:
-            user_id (int): The user's ID
+            Booking ID: The id of the booking
 
         Return:
             Returns None or arbitray key worded argments
         """
-        booking = self.find_booking_by(email=email)
+        booking = self.find_booking_by(id=booking_id)
         for key, value in kwargs.items():
             if not hasattr(booking, key):
                 raise ValueError
