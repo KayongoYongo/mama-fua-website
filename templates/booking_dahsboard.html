@@ -71,13 +71,18 @@
             <button type ="submit" class="btn" name ="create_booking" id = "create_booking" > Create Booking </button>
         </form>
     </div>
+    <br>
     <h1>Booking History:</h1>
     <table>
         <tr>
             <th>Booking ID</th>
             <th>Email</th>
             <th>Created at</th>
+            <th>Pick up date</th>
+            <th>Pick up time</th>
+            <th>Delivery Time</th>
             <th>Expected date</th>
+            <th>Location</th>
             <th>Status</th>
         </tr>
         
@@ -86,7 +91,11 @@
             <td>{{ booking.id }}</td>
             <td>{{ booking.email }}</td>
             <td>{{ booking.created_at }}</td>
+            <td>{{ booking.pickup_date }}</td>
+            <td>{{ booking.pickup_time }}</td>
+            <td>{{ booking.delivery_time }}</td>
             <td>{{ booking.expected_date }}</td>
+            <td>{{ booking.location }}</td>
             <td>{{ booking.status }}</td>
         </tr>
         {% endfor %}
