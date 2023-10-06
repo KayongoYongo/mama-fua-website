@@ -140,7 +140,7 @@ class Auth:
         
         return None
 
-    def create_booking(self, email: str)-> Union[None, Bookings]:
+    def create_booking(self, email: str, pickup_date: str, pickup_time: str, delivery_time: str, location: str)-> Union[None, Bookings]:
         """
         This function creates a booking instance
 
@@ -160,7 +160,7 @@ class Auth:
         if count > 0:
             raise ValueError("The previous booking is still pending. Please wait for a comfirmation message.")
         
-        return self._db.add_booking(email)
+        return self._db.add_booking(email, pickup_date, pickup_time, delivery_time, location)
         
     def find_booking(self, email: str)-> Union[None, Bookings]:
         """
@@ -187,3 +187,32 @@ class Auth:
         """ 
         booking = self._db.find_all_bookings_by(email=email)
         return booking
+    
+    def find_all_users_bookings(self, status: str) -> Union[None, Bookings]:
+        """
+        This function returns all the bookings availabe in the users table
+
+        Args: 
+            None
+
+        Return: A booking object
+        """
+        booking = self._db.find_all_bookings_by(status=status)
+        return booking
+    
+    def update_bookings(self, id: int, status: str, expected_date: str) -> str:
+        """
+        This function updates the booking table
+
+        Args:
+            id: The id that will be assigned to a table
+
+        Return:
+            A string which is the session ID.
+        """
+        try:
+            booking = self._db.find_booking_by(id=id)
+        except NoResultFound:
+            return None
+        else:
+            return self._db.update_booking(booking.id, status=status), self._db.update_booking(booking.id, expected_date=expected_date)       
