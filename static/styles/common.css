@@ -20,7 +20,7 @@ body {
 }
 
 .wrapper {
-    margin-top: 10px;
+    position: relative;
     width : 420px;
     background: white;
     color: black;
