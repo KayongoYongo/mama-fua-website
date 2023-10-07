@@ -23,24 +23,24 @@
 </header>
 
 <body>
+    <h1>Booking Dashboard</h1>
     <div class="form-booking">
-        <h1>Booking Dashboard</h1>
         <h2>Welcome {{user.first_name}}</h2>
-        <h1>Details:</h1>
+        <h2>Details:</h2>
         <br>        
         <form method="POST" action="{{ url_for('create_booking') }}">
 
             <label for="datePicker">Select a Date:</label>
-            <div class="input-area">
+            <div class="input-box">
                 <input type="date" id="datePicker" name="datePicker" oninput="disableWeekends(this)">
                 <script src="static/javascript/disableWeekends.js"></script>
                 <script src="static/javascript/checkDate.js"></script>
                 <script src="static/javascript/minimumDate.js"></script>
                 <script src="static/javascript/maxDate.js"></script>
             </div>
-            <br>
             <label for="timeSlots">Select a Time Slot for pick up:</label>
-            <select id="timeSlots" name="pickupTime">
+            <div class="input-box">
+            <select class="timeSlots" id="timeSlots" name="pickupTime">
                 <option value="9:00 AM">9:00 AM</option>
                 <option value="10:00 AM">10:00 AM</option>
                 <option value="11:00 AM">11:00 AM</option>
@@ -49,10 +49,10 @@
                 <option value="2:00 PM">2:00 PM</option>
                 <option value="3:00 PM">3:00 PM</option>
             </select>
-            <br>
-            <br>
+            </div>
             <label for="timeSlots">Select a Time Slot for Delivery:</label>
-            <select id="timeSlots" name="deliveryTime">
+            <div class="input-box">
+            <select class="timeSlots" id="timeSlots" name="deliveryTime">
                 <option value="9:00 AM">9:00 AM</option>
                 <option value="10:00 AM">10:00 AM</option>
                 <option value="11:00 AM">11:00 AM</option>
@@ -61,18 +61,28 @@
                 <option value="2:00 PM">2:00 PM</option>
                 <option value="3:00 PM">3:00 PM</option>
             </select>
-            <br>
-            <br>
+            </div>
             <label for="timeSlots">Location:</label>
             <div class="input-box">
                 <input type="text" name="location" id="location" placeholder="location">
             </div>
-            <br>
+            <div class="flash-message-div">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="flash fade-out" id="flash-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <script src="static/javascript/hideFlashMessage.js"></script>
+            </div>
             <button type ="submit" class="btn" name ="create_booking" id = "create_booking" > Create Booking </button>
         </form>
     </div>
     <br>
-    <h1>Booking History:</h1>
+    <h2>Booking History:</h2>
     <table>
         <tr>
             <th>Booking ID</th>
