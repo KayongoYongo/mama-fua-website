@@ -154,11 +154,12 @@ class Auth:
         bookings = self._db.find_all_bookings_by(email=email)
         count = 0
         for booking in bookings:
-            if booking.status == "Pending":
+            if booking.status != "Delivered":
                 count += 1 
        
         if count > 0:
-            raise ValueError("The previous booking is still pending. Please wait for a comfirmation message.")
+            return None
+            # raise ValueError("The previous booking is still pending. Please wait for a comfirmation message.")
         
         return self._db.add_booking(email, pickup_date, pickup_time, delivery_time, location)
         
