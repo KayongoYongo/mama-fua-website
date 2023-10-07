@@ -156,21 +156,36 @@ def create_booking() -> str:
     Return:
         Return: A jsonify message
     """
-
+    # Store form data in variables
     pickup_date = request.form.get('datePicker')
     pickup_time = request.form.get('pickupTime')
-    delivery_time = request.form.get('deliveryTime ')
+    delivery_time = request.form.get('deliveryTime')
     location = request.form.get('location')
-
     print(pickup_date)
+    print(pickup_time)
+    print(delivery_time)
     print(location)
 
+    # Validate form data
+    if not pickup_date or not pickup_time or not delivery_time or not location:
+        flash("No field should be left empty", "error")
+
+    # Aquire the users details from the current session ID
     session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
 
+    # This is used  to show aall the bookings based on the users email
     bookings = AUTH.find_all_bookings(user.email)
 
-    AUTH.create_booking(user.email, pickup_date, pickup_time, delivery_time, location)
+    # This function creates the booking instance
+    created_booking = AUTH.create_booking(user.email, pickup_date, pickup_time, delivery_time, location)
+
+    if created_booking == None:
+        flash ("Cannot create a new booking unless the previos one is completed")
+    
+    if "_flashes" in session:
+        return redirect(url_for('view_booking'))
+
     return render_template('booking_dahsboard.html', user=user, bookings=bookings)
 
 @app.route('/view_booking', methods=['GET'])
