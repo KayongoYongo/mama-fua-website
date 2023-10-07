@@ -3,7 +3,7 @@
 """
 from os import getenv
 from views.auth.auth import Auth
-from flask import Flask, jsonify, request, abort, redirect, render_template, url_for, make_response
+from flask import Flask, jsonify, request, abort, redirect, render_template, url_for, make_response, flash, session
 from sqlalchemy.orm.exc import NoResultFound
 
 
@@ -11,6 +11,8 @@ app = Flask(__name__)
 
 AUTH = Auth()
 
+
+app.secret_key = 'your_secret_key_here'
 
 @app.route('/')
 def index() -> str:
@@ -54,24 +56,33 @@ def register() -> str:
     """
     email = request.form.get('email')
     password = request.form.get('password')
+    repeatPassword = request.form.get('repeatPassword')
     first_name = request.form.get('first_name')
     second_name = request.form.get('second_name')
-    phone_number = request.form.get('phone_number')
+    phone_number = request.form.get('phone_number')     
 
-    if not email:
-        return jsonify({"email": "The email cannot be empty"})
-        
-    if not password:
-        return jsonify({"password": "The password cannot be empty"})
+    if not first_name or not second_name or not email or not password or not repeatPassword or not phone_number:
+        flash("No field should be left empty", "error")
 
+    if password != repeatPassword:
+        flash ("The passwords do not match", "error")
+
+    # If there are flash messages, redirect to the signup page with the messages
+    if "_flashes" in session:
+        return redirect(url_for('signup'))
+    
     # register user if user does not exist
     try:
-        user = AUTH.register_user(email, password, first_name, second_name, phone_number)
+        AUTH.register_user(email, password, first_name, second_name, phone_number)
     except Exception:
-        return jsonify({"message": "email already registered"}), 400
+        flash ("The email already exists")
+        # If there are flash messages, redirect to the signup page with the messages
+        if "_flashes" in session:
+            return redirect(url_for('signup'))
+        
     return redirect(url_for('login_route'))
     
-@app.route('/sessions', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login() -> str:
     """A function theat impliments a log in functionality
 
@@ -85,9 +96,15 @@ def login() -> str:
     email = request.form.get('email')
     password = request.form.get('password')
 
-    if not AUTH.valid_login(email, password):
-        abort(401)
+    # If there are flash messages, redirect to the signup page with the messages
+    if not email or not password:
+        flash("No field should be left empty", "error")
+        return redirect(url_for('login'))
 
+    if not AUTH.valid_login(email, password):
+        flash("Invalid email or password.", "error")
+        return redirect(url_for('login'))
+        
     # create a new session
     session_id = AUTH.create_session(email)
 
