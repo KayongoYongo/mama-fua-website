@@ -45,8 +45,24 @@
                 <input type="password" name="password" id="password" placeholder="password">
                 <i class='bx bxs-lock' ></i>     
             </div>
+            <div class="input-box">
+                <input type="password" name="repeatPassword" id="repeatPassword" placeholder="password">
+                <i class='bx bxs-lock' ></i>     
+            </div>
             <button type ="submit" name ="register" class="btn" id = "register" > Create an account </button>
 
+            <div class="flash-message-div">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="flash fade-out" id="flash-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <script src="static/javascript/hideFlashMessage.js"></script>
+            </div>
             <div class="redirect">
             <p> Already registered?<a href="{{ url_for('login_route') }}">Log in</a></p>
             </div>

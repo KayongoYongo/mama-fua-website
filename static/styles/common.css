@@ -97,3 +97,14 @@ body {
     justify-content: center;
     font-weight: 200;
 }
+
+.flash {
+    position: relative;
+    height: 40px;
+    width: 100%;
+    color: red;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

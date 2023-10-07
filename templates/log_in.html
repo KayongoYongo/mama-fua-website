@@ -37,6 +37,19 @@
 
         <button type ="submit" class="btn" name ="log_in" id = "log_in" > Log In </button>
         
+        <div class="flash-message-div">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash fade-out" id="flash-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <script src="static/javascript/hideFlashMessage.js"></script>
+        </div>
+        
         <div class="redirect">
         <p>New user?<a href="{{ url_for('signup') }}">Sign up</a></p>
         </div>
