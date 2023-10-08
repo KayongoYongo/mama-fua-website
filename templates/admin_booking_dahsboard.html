@@ -23,39 +23,26 @@
 </header>
 
 <body>
+    <h1>Booking Dashboard</h1>
     <div class="form-booking">
-        <h1>Booking Dashboard</h1>
-        <h2>Welcome {{user.first_name}}</h2>
-        <h1>Details:</h1>
-        <br>         
-    </div>
-    <br>
-
-
+        
+    <h2>Welcome {{user.first_name}}</h2>
     <form method="POST" action="{{ url_for('view_user_bookings') }}">
-        <h1>Pending bookings:</h1>
-        <br>
-            <select id="status" name="status">
+        <h2>Search bookings status:</h2>
+            <select id="status" name="status" class="status">
                 <option value="Pending">Pending</option>
                 <option value="In progress">In progress</option>
                 <option value="Delivered">Delivered</option>
             </select>
-        <br>
             <button type ="submit" class="btn" name ="search" id = "search" > Search </button>
-        <br>
     </form>
-    <br>
-
 
     <form method="POST" action="{{ url_for('update_bookings') }}">
-        <h1>Update bookings:</h1>
-        <br>
-            <input type="text" name="bookingID" id="bookingID" placeholder="Booking ID">
-        <br>
-            <button type ="submit" class="btn" name ="updateBooking" id = "updateBooking" > Update Booking </button>
-        <br>
+        <h2>Update booking by entering ID:</h2>
+        <input type="text" name="bookingID" id="bookingID" class="bookingID" placeholder="Booking ID">
+        <button type ="submit" class="btn" name ="updateBooking" id = "updateBooking" > Update Booking </button>
 
-
+    </div>
         <table>
             <tr>
                 <th>Booking ID</th>
