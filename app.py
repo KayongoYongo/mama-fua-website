@@ -5,6 +5,7 @@ from os import getenv
 from views.auth.auth import Auth
 from flask import Flask, jsonify, request, abort, redirect, render_template, url_for, make_response, flash, session
 from sqlalchemy.orm.exc import NoResultFound
+from flask_mail import Mail, Message
 
 
 app = Flask(__name__)
@@ -13,6 +14,16 @@ AUTH = Auth()
 
 
 app.secret_key = 'your_secret_key_here'
+
+# Configure email settings
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # e.g., smtp.gmail.com for Gmail
+app.config['MAIL_PORT'] = 587  # Port for TLS (587 for Gmail)
+app.config['MAIL_USE_TLS'] = True  # Use TLS (True for Gmail)
+app.config['MAIL_USE_SSL'] = False  # Use SSL (False for Gmail)
+app.config['MAIL_USERNAME'] = 'mamafua36@gmail.com'  # Your email address
+app.config['MAIL_PASSWORD'] = 'bdmp uidb xlvn zezv'  # Your email password
+
+mail = Mail(app)
 
 @app.route('/')
 def index() -> str:
@@ -266,6 +277,31 @@ def update_bookings() -> str:
     user = AUTH.get_user_from_session_id(session_id)
     bookings = AUTH.find_all_users_bookings(status)
     
+    return render_template('admin_booking_dahsboard.html', user=user, bookings=bookings)
+
+@app.route('/send_email', methods=['POST'])
+def send_email():
+        
+    recipient = request.form['recipient_email']
+    status = request.form.get('status')
+
+    subject = "The laundry status has been updated"
+
+    msg = Message(subject=subject,
+                    sender=app.config['MAIL_USERNAME'],
+                    recipients=[recipient])
+    
+    print(status)
+    # Set the email body
+    msg.body = "The laundry status has been updated. Please log in and check your dashboard"
+
+    mail.send(msg)
+
+    # Get the details for rendering the page
+    session_id = request.cookies.get("session_id", None)
+    user = AUTH.get_user_from_session_id(session_id)
+    bookings = AUTH.find_all_users_bookings(status)
+
     return render_template('admin_booking_dahsboard.html', user=user, bookings=bookings)
 
 if __name__ == "__main__":
