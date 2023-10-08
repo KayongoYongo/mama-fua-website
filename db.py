@@ -19,7 +19,7 @@ class DB:
         """Initialize a new DB instance
         """
         # mysql_url = 'mysql+mysqldb://end_user:password@localhost:3306/mama_fua'
-        mysql_url ="sqlite:///a.db"
+        mysql_url ="sqlite:///mama_fua.db"
         self._engine = create_engine(mysql_url, echo=False)
         
         """
