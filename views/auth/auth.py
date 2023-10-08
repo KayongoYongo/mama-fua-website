@@ -201,7 +201,7 @@ class Auth:
         booking = self._db.find_all_bookings_by(status=status)
         return booking
     
-    def update_bookings(self, id: int, status: str, expected_date: str) -> str:
+    def update_bookings(self, id: int, status: str, expected_date: str, cost: str) -> str:
         """
         This function updates the booking table
 
@@ -216,4 +216,4 @@ class Auth:
         except NoResultFound:
             return None
         else:
-            return self._db.update_booking(booking.id, status=status), self._db.update_booking(booking.id, expected_date=expected_date)       
+            return self._db.update_booking(booking.id, status=status), self._db.update_booking(booking.id, expected_date=expected_date),  self._db.update_booking(booking.id, cost=cost)     
