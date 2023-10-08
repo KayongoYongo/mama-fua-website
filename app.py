@@ -44,6 +44,12 @@ def contact() -> str:
     """
     return render_template('contact.html')
 
+@app.route('/about')
+def about() -> str:
+    """Returns a simple JSONIFY request
+    """
+    return render_template('about_us.html')
+
 @app.route('/users', methods=['POST'])
 def register() -> str:
     """A function that impiments a POST method on the users table.
