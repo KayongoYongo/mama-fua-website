@@ -167,10 +167,6 @@ def create_booking() -> str:
     pickup_time = request.form.get('pickupTime')
     delivery_time = request.form.get('deliveryTime')
     location = request.form.get('location')
-    print(pickup_date)
-    print(pickup_time)
-    print(delivery_time)
-    print(location)
 
     # Validate form data
     if not pickup_date or not pickup_time or not delivery_time or not location:
@@ -205,7 +201,19 @@ def view_booking() -> str:
         Return: A jsonify message
     """
     session_id = request.cookies.get("session_id", None)
+
+    if session_id is None:
+        return redirect(url_for('login_route'))
+    
+    print(session_id)
+
     user = AUTH.get_user_from_session_id(session_id)
+
+    if user is None:
+    # If the user is not found (e.g., session_id is invalid), also redirect to the login page
+        return redirect(url_for('login_route'))
+    
+    print(user.first_name)
     
     bookings = AUTH.find_all_bookings(user.email)
     print(bookings)
