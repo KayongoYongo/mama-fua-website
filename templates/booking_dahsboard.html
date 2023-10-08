@@ -17,6 +17,7 @@
         <a href="{{ url_for('index') }}">Home</a>
         <a href="{{ url_for('about')}}">About</a>
         <a href="{{ url_for('location') }}">Our location</a>
+        <a href="{{ url_for('user_dashboard') }}">User Dashboard</a>
         <a href="{{ url_for('contact') }}">Contact</a>
     </nav>
 </header>
@@ -93,6 +94,7 @@
             <th>Expected date</th>
             <th>Location</th>
             <th>Status</th>
+            <th>Cost</th>
         </tr>
         
         {% for booking in bookings %}
@@ -106,6 +108,7 @@
             <td>{{ booking.expected_date }}</td>
             <td>{{ booking.location }}</td>
             <td>{{ booking.status }}</td>
+            <td>{{ booking.cost }}</td>
         </tr>
         {% endfor %}
     </table>

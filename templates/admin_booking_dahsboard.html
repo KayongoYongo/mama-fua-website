@@ -47,6 +47,7 @@
     <form method="POST" action="{{ url_for('update_bookings') }}">
         <h2>Update booking by entering ID:</h2>
             <input type="text" name="bookingID" id="bookingID" class="bookingID" placeholder="Booking ID">
+            <input type="text" name="cost" id="cost" class="cost" placeholder="cost">
 
         <button type ="submit" class="btn" name ="updateBooking" id = "updateBooking" > Update Booking </button>
 
@@ -86,9 +87,20 @@
                         <option value="Delivered">Delivered</option>
                     </select>
                 </td>
+                <td>{{ booking.cost }}</td>
             </tr>
             {% endfor %}
         </table>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash fade-out" id="flash-message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <script src="static/javascript/hideFlashMessage.js"></script>
     </form>
 </body>
 
