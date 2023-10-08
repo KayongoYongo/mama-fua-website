@@ -36,9 +36,17 @@
             <button type ="submit" class="btn" name ="search" id = "search" > Search </button>
     </form>
 
+    <form method="POST" action="{{ url_for('send_email') }}">
+        <h2>Search bookings status:</h2>
+            <input type="text" name="recipient_email" id="recipient_email" class="recipient_email" placeholder="recipient email">
+ 
+        <button type ="submit" class="btn" name ="updateUser" id = "updateUser" > Update user </button>
+    </form>
+
     <form method="POST" action="{{ url_for('update_bookings') }}">
         <h2>Update booking by entering ID:</h2>
-        <input type="text" name="bookingID" id="bookingID" class="bookingID" placeholder="Booking ID">
+            <input type="text" name="bookingID" id="bookingID" class="bookingID" placeholder="Booking ID">
+
         <button type ="submit" class="btn" name ="updateBooking" id = "updateBooking" > Update Booking </button>
 
     </div>
