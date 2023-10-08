@@ -2,6 +2,7 @@
 """Basic flask app
 """
 from os import getenv
+import os
 from views.auth.auth import Auth
 from flask import Flask, jsonify, request, abort, redirect, render_template, url_for, make_response, flash, session
 from sqlalchemy.orm.exc import NoResultFound
@@ -20,8 +21,8 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # e.g., smtp.gmail.com for Gmail
 app.config['MAIL_PORT'] = 587  # Port for TLS (587 for Gmail)
 app.config['MAIL_USE_TLS'] = True  # Use TLS (True for Gmail)
 app.config['MAIL_USE_SSL'] = False  # Use SSL (False for Gmail)
-app.config['MAIL_USERNAME'] = 'Your email address'  # Your email address
-app.config['MAIL_PASSWORD'] = 'Your emial password'  # Your email password
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')  # Your email address
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')  # Your email password
 
 mail = Mail(app)
 
@@ -65,12 +66,20 @@ def about() -> str:
 def admin_dashboard() -> str:
     """Returns a simple JSONIFY request
     """
-        # Get the details for rendering the page
+    # Get the details for rendering the page
     session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
 
     return render_template('admin_dashboard.html', user=user)
-    
+@app.route('/user_dashboard')
+def user_dashboard() -> str:
+    """Returns a simple JSONIFY request
+    """
+    # Get the details for rendering the page
+    session_id = request.cookies.get("session_id", None)
+    user = AUTH.get_user_from_session_id(session_id)
+
+    return render_template('user_dashboard.html', user=user)
 
 @app.route('/users', methods=['POST'])
 def register() -> str:
@@ -277,16 +286,18 @@ def update_bookings() -> str:
     id = request.form.get('bookingID')
     expected_date = request.form.get('datePicker')
     status = request.form.get('status')
-
-    print(expected_date)
-    print(status)
-
-    AUTH.update_bookings(id, status, expected_date)
+    cost = request.form.get('cost')
+    
+    AUTH.update_bookings(id, status, expected_date, cost)
 
     # Get the details for rendering the page
     session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
     bookings = AUTH.find_all_users_bookings(status)
+
+    if not id or not expected_date or not status or not cost:
+        flash("No field should be left empty", "error")
+        return render_template('admin_booking_dahsboard.html', user=user, bookings=bookings)
     
     return render_template('admin_booking_dahsboard.html', user=user, bookings=bookings)
 
@@ -294,7 +305,7 @@ def update_bookings() -> str:
 def send_email():
         
     recipient = request.form['recipient_email']
-    status = request.form.get('status')
+    status = request.form['status']
 
     subject = "The laundry status has been updated"
 
@@ -304,7 +315,7 @@ def send_email():
     
     print(status)
     # Set the email body
-    msg.body = "The laundry status has been updated. Please log in and check your dashboard"
+    msg.body = f"The laundry status has been updated to {status}. Please log in and check your dashboard"
 
     mail.send(msg)
 
