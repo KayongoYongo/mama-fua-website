@@ -305,7 +305,7 @@ def update_bookings() -> str:
 def send_email():
         
     recipient = request.form['recipient_email']
-    status = request.form['status']
+    status = request.form.get('status')
 
     subject = "The laundry status has been updated"
 
@@ -315,7 +315,7 @@ def send_email():
     
     print(status)
     # Set the email body
-    msg.body = f"The laundry status has been updated to {status}. Please log in and check your dashboard"
+    msg.body = "The laundry status has been updated. Please log in and check your dashboard"
 
     mail.send(msg)
 
