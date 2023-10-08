@@ -30,6 +30,7 @@ class Bookings(Base):
     expected_date = Column(String(250), nullable=True, default="You will be updated")
     location = Column(String(250), nullable=True)
     status = Column(String(250), nullable=True, default="Pending")
+    cost = Column(String(250), nullable=True, default="You will be updated")
 
 class User(Base):
     """This class is responsible for the creation of the user model

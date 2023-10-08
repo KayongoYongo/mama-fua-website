@@ -30,3 +30,4 @@ class Bookings(Base):
     location = Column(String(250), nullable=True)
     expected_date = Column(String(250), nullable=True, default="You will be updated")
     status = Column(String(250), nullable=True, default="Pending")
+    cost = Column(String(250), nullable=True, default="You will be updated")
