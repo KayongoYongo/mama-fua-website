@@ -20,8 +20,8 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # e.g., smtp.gmail.com for Gmail
 app.config['MAIL_PORT'] = 587  # Port for TLS (587 for Gmail)
 app.config['MAIL_USE_TLS'] = True  # Use TLS (True for Gmail)
 app.config['MAIL_USE_SSL'] = False  # Use SSL (False for Gmail)
-app.config['MAIL_USERNAME'] = 'mamafua36@gmail.com'  # Your email address
-app.config['MAIL_PASSWORD'] = 'bdmp uidb xlvn zezv'  # Your email password
+app.config['MAIL_USERNAME'] = 'Your email address'  # Your email address
+app.config['MAIL_PASSWORD'] = 'Your emial password'  # Your email password
 
 mail = Mail(app)
 
@@ -60,6 +60,17 @@ def about() -> str:
     """Returns a simple JSONIFY request
     """
     return render_template('about_us.html')
+
+@app.route('/admin_dashboard')
+def admin_dashboard() -> str:
+    """Returns a simple JSONIFY request
+    """
+        # Get the details for rendering the page
+    session_id = request.cookies.get("session_id", None)
+    user = AUTH.get_user_from_session_id(session_id)
+
+    return render_template('admin_dashboard.html', user=user)
+    
 
 @app.route('/users', methods=['POST'])
 def register() -> str:
