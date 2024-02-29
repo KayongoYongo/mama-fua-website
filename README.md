@@ -1,4 +1,4 @@
-**ALX-Portfolio-Project**
+# Mama Fua Website
 
 ## Description
 A simple laundy website with authorization and authentication where users can book their laundry and receive the status of the process
