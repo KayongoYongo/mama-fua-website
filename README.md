@@ -4,6 +4,9 @@
 A simple laundy website with authorization and authentication where users can book their laundry and receive the status of the process
 via email
 
+## Perview
+![image](https://github.com/KayongoYongo/mama-fua-website/assets/111020589/feb18376-41d5-44ec-a4d5-5cc01236479f)
+
 ## What has been handled?
 1. Create a new account
 2. Log in functionality
