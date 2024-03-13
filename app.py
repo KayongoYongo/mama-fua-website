@@ -2,12 +2,15 @@
 """Basic flask app
 """
 from os import getenv
-import os
 from views.auth.auth import Auth
 from flask import Flask, jsonify, request, abort, redirect, render_template, url_for, make_response, flash, session
 from sqlalchemy.orm.exc import NoResultFound
 from flask_mail import Mail, Message
+from dotenv import load_dotenv
+import os
 
+# Load environment variables from the .env file
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -21,59 +24,61 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # e.g., smtp.gmail.com for Gmail
 app.config['MAIL_PORT'] = 587  # Port for TLS (587 for Gmail)
 app.config['MAIL_USE_TLS'] = True  # Use TLS (True for Gmail)
 app.config['MAIL_USE_SSL'] = False  # Use SSL (False for Gmail)
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')  # Your email address
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')  # Your email password
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')  # Your email address
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')  # Your email password
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME') # The default sender of the email
 
 mail = Mail(app)
 
 @app.route('/')
 def index() -> str:
-    """Returns a simple JSONIFY request
+    """Renders a template for the home page
     """
     return render_template('index.html')
 
 @app.route('/signup')
 def signup() -> str:
-    """Returns a simple JSONIFY request
+    """Renders a template for the sign up page
     """
     return render_template('sign_up.html')
 
 @app.route('/login')
 def login_route() -> str:
-    """Returns a simple JSONIFY request
+    """Renders a template for the log in page
     """
     return render_template('log_in.html')
 
 @app.route('/location')
 def location() -> str:
-    """Returns a simple JSONIFY request
+    """Renders a template for the locations page
     """
     return render_template('our_location.html')
 
 @app.route('/contact')
 def contact() -> str:
-    """Returns a simple JSONIFY request
+    """Renders a template for the contact page
     """
     return render_template('contact.html')
 
 @app.route('/about')
 def about() -> str:
-    """Returns a simple JSONIFY request
+    """Renders a template for the about us page
     """
     return render_template('about_us.html')
 
 @app.route('/admin_dashboard')
 def admin_dashboard() -> str:
-    """Returns a simple JSONIFY request
+    """Renders a template for the admin dashboard
     """
     # Get the details for rendering the page
     session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
 
     return render_template('admin_dashboard.html', user=user)
+
 @app.route('/user_dashboard')
 def user_dashboard() -> str:
-    """Returns a simple JSONIFY request
+    """Renders a template for the user dashboard
     """
     # Get the details for rendering the page
     session_id = request.cookies.get("session_id", None)
